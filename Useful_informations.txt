@@ -1,0 +1,12 @@
+% Run these commands before running the program on octave
+
+octave --no-gui
+
+setenv PYTHON python3;
+pkg load symbolic;
+sympref reset;
+addpath('./name_of folder/');
+
+
+Mover no origami:
+ctrl+k+l/r/u/d
