@@ -39,7 +39,7 @@ function [joint_z_vector, joint_pos_vector] = jointParameters (DH_robot_table)
 		thetai = DH_robot_table(row,theta_pos);
 
 		DH_matrix = DH_matrix*Screw_x(alphai_1,ai_1);
-		DH_matrix = simplify(DH_matrix)
+		DH_matrix = simplify(DH_matrix);
 
 		% Gets the point before using the operation Screw_z, so the values match with the bibliography.
 		joint_pos_vector = [joint_pos_vector  DH_matrix(pos_lines, pos_col)];
