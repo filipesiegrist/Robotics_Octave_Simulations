@@ -9,9 +9,9 @@ function T = T_forward (alfai_1,ai_1,thetai,di)
   %Transforms the reference to the next link
   % from (i-1) to (i)
   addpath('./Basic_Transformations/');
-  T = mtx(ai_1)*T;
+  T = mtx(ai_1);
   T = mrotx(alfai_1)*T;
-  T = mtz(di);
+  T = mtz(di)*T;
   T = mrotz(thetai)*T;
 
 endfunction
