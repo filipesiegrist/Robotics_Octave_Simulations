@@ -28,6 +28,7 @@ DH_Antropomorfico = [
 	[0 a_3 0 theta_4]
 	[-pi/2 0 0 theta_5]
 	[pi/2 0 d_6 theta_6]
+	[0 0 0 0]
 ];
 
 syms joint_z joint_p;
@@ -36,9 +37,32 @@ syms joint_z joint_p;
 [joint_z, joint_p] = jointParameters(DH_Antropomorfico);
 
 % jacobiano da cinemática
-Jc = jacobianMatrix(joint_z, joint_p)
+Jc = jacobianMatrix(joint_z, joint_p);
+
+% Substituicoes para deixar a expressao mais legivel.
+syms s1;
+syms s2;
+syms s5;
+syms s23;
+syms s234;
+syms c1;
+syms c2;
+syms c5;
+syms c23;
+syms c234;
+
+Jc = subs(Jc,sin(theta_1),s1);
+Jc = subs(Jc,sin(theta_2),s2);
+Jc = subs(Jc,sin(theta_5),s5);
+Jc = subs(Jc,sin(theta_2+theta_3),s23);
+Jc = subs(Jc,sin(theta_2+theta_3+theta_4),s234);
+Jc = subs(Jc,cos(theta_1),c1);
+Jc = subs(Jc,cos(theta_2),c2);
+Jc = subs(Jc,cos(theta_5),c5);
+Jc = subs(Jc,cos(theta_2+theta_3),c23);
+Jc = subs(Jc,cos(theta_2+theta_3+theta_4),c234)
 
 % jacobiano da estática
-Je = transpose(Jc)
+%Je = transpose(Jc)
 
 clear;
