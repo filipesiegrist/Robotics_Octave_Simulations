@@ -63,6 +63,6 @@ Jc = subs(Jc,cos(theta_2+theta_3),c23);
 Jc = subs(Jc,cos(theta_2+theta_3+theta_4),c234)
 
 % jacobiano da estática
-%Je = transpose(Jc)
+Je = transpose(Jc)
 
 clear;
