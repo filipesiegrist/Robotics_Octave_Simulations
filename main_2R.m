@@ -25,7 +25,7 @@ DH_2R = [
 syms joint_z joint_p;
 
 % Parametros das juntas:
-[joint_z, joint_p] = jointParameters(DH_2R)
+[joint_z, joint_p] = jointParameters(DH_2R);
 
 % jacobiano da cinemática
 Jc = jacobianMatrix(joint_z, joint_p)
