@@ -35,12 +35,12 @@ DH_Stanford = [
 ROTATIVA = 0;
 PRISMATICA = 1;
 
-Juntas_Antropomorfico = [ROTATIVA, ROTATIVA, PRISMATICA, ROTATIVA, ROTATIVA, ROTATIVA];
+Juntas_Stanford = [ROTATIVA, ROTATIVA, PRISMATICA, ROTATIVA, ROTATIVA, ROTATIVA];
 
-syms joint_z joint_p;
+syms joint_z joint_p joint_r;
 
 % Parametros das juntas:
-[joint_z, joint_p] = jointParameters(DH_Stanford, Juntas_Antropomorfico);
+[joint_z, joint_p, joint_r] = jointParameters(DH_Stanford, Juntas_Stanford)
 
 % jacobiano da cinemática
 Jc = jacobianMatrix(joint_z, joint_p);
