@@ -27,7 +27,8 @@ function DH_matrix = mDH (DH_robot_table)
 		ai_1 = DH_robot_table(row,a_pos);
 		di = DH_robot_table(row,d_pos);
 		thetai = DH_robot_table(row,theta_pos);
-		DH_matrix = DH_matrix*T_back(alphai_1,ai_1,thetai,di);
+		T = simplify(T_back(alphai_1,ai_1,thetai,di));
+		DH_matrix = DH_matrix*T;
 		DH_matrix = simplify(DH_matrix);
 	end
 endfunction
