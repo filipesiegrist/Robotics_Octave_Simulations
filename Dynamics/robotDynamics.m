@@ -24,7 +24,7 @@
 #		X-axis
 #	
 
-function [N,joint_forces, joint_torques] = robotDynamics(z_vector, pos_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, link_x)
+function [joint_forces, joint_torques] = robotDynamics(N, z_vector, pos_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, link_x)
 
 	assert(1 == 2, "Leaving the function.");
 	%links = 0:N-1;
