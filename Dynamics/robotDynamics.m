@@ -5,10 +5,11 @@
 % @Last Modified time: 2019-05-27 14:45:58
 %
 
-function [joint_forces, joint_torques] = robotDynamics(z_vector, pos_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, link_x)
+function [N,joint_forces, joint_torques] = robotDynamics(z_vector, pos_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, link_x)
+	% 
 
-	%links = 2:N;
-	%joints = (N+1):1;
+	%links = 0:N-1;
+	%joints = (N):1;
 
 	% "Outer" iterations
 
