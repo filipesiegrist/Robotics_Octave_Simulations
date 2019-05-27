@@ -34,7 +34,7 @@ function J = jacobianMatrix(z_vector, pos_vector, prismatic_joints_indexes)
 		prismatic_joints_indexes = zeros(last_joint, 1);
 	end
 
-	J = []
+	J = [];
 	
 	for i = init_pos:last_joint
 		% Analyzes Z(i-1) and P(i-1)
