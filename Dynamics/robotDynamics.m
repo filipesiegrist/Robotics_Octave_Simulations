@@ -5,9 +5,28 @@
 % @Last Modified time: 2019-05-27 14:45:58
 %
 
-function [N,joint_forces, joint_torques] = robotDynamics(z_vector, pos_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, link_x)
-	% 
+# 
+#	Calculate the efforts on the joints of the robot.
+#	Efforts: Forces and Torques.
+#	
+#	Receives the following informations:
+#	Robot: N (number of links)
+#	Joints:
+#		Z-axis (previously calculated)
+#		Position (previously calculated)
+#		Rotation Matrix (previously calculated)
+#		Angular Speed
+#		Angular Acceleration
+#	Links:
+#		Mass
+#		Inertia Tensor
+#		Mass center position
+#		X-axis
+#	
 
+function [N,joint_forces, joint_torques] = robotDynamics(z_vector, pos_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, link_x)
+
+	assert(1 == 2, "Leaving the function.");
 	%links = 0:N-1;
 	%joints = (N):1;
 
