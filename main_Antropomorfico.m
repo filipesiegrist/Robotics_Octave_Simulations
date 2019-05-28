@@ -31,10 +31,10 @@ DH_Antropomorfico = [
 	[0 0 0 0]
 ];
 
-syms joint_z joint_p, joint_r;
+syms joint_z joint_p joint_r;
 
 % Parametros das juntas:
-[joint_z, joint_p joint_r] = jointParameters(DH_Antropomorfico)
+[joint_z, joint_p] = jointParameters(DH_Antropomorfico)
 
 % jacobiano da cinemática
 Jc = jacobianMatrix(joint_z, joint_p);
