@@ -9,11 +9,13 @@
 #	Calculate the efforts on the joints of the robot.
 #	Efforts: Forces and Torques.
 #	
+#	Uses the Newton-Euler algorythm as show by Craig(2013)
+#	
 #	Receives the following informations:
 #	Robot: N (number of links)
 #	Joints:
 #		Z-axis (previously calculated)
-#		Position (previously calculated)
+#		Relative Position (in the direction of the X axis) (previously calculated)
 #		Rotation Matrix (previously calculated)
 #		Angular Speed
 #		Angular Acceleration
@@ -21,10 +23,9 @@
 #		Mass
 #		Inertia Tensor
 #		Mass center position
-#		X-axis
 #	
 
-function [joint_forces, joint_torques] = robotDynamics(N, z_vector, pos_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, link_x)
+function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers)
 	N = 3;
 	links = 0:(N-1);
 	joints = N:1;
