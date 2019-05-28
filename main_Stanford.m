@@ -40,7 +40,7 @@ Juntas_Stanford = [ROTATIVA, ROTATIVA, PRISMATICA, ROTATIVA, ROTATIVA, ROTATIVA]
 syms joint_z joint_p joint_r;
 
 % Parametros das juntas:
-[joint_z, joint_p, joint_r] = jointParameters(DH_Stanford, Juntas_Stanford)
+[joint_z, joint_p] = jointParameters(DH_Stanford, Juntas_Stanford)
 
 % jacobiano da cinemática
 Jc = jacobianMatrix(joint_z, joint_p);
