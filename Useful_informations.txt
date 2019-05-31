@@ -16,3 +16,7 @@ omega_i = rotation_matrices(certain_position)*omega_i + joint_speeds(joint_posit
 Tenho que ter omega_i_plus_1 !!! e dot_omega_i_plus_1
 
 nao preciso do viplus nem vci plus
+
+
+EXPLICAR PARA O PROFESSOR COMO FAÇO PRA RODAR.
+Rodo o octave na pasta raiz do projeto e vou executando os mains.
