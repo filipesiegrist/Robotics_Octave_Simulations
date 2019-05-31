@@ -26,24 +26,58 @@
 #	
 
 function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers)
-	N = 3;
-	links = 0:(N-1);
+	links = 1:N;
 	joints = N:1;
 
-	% "Outer" iterations
-
 	% Initial conditions
-	omega_i = 0;
-	dot_omega_i = 0;
-	v_i = 0;
+	% The link zero has no velocity or angular velocity.
+	omega_i = [0; 0; 0];
+	v_i = [0; 0; 0];
+
+	% The same happens with the angular angular linear accelerations.
+	dot_omega_i = [0; 0; 0];
 	dot_v_i = 0;
+
+	% The tool doesn't have a force/Momentum
+	F_n = 0;
+	N_n = 0;
 
 	%Vectors with the dynamic parameters
 	F_i_plus_1 = [];
 	N_i_plus_1 = [];
 
+	% "Outer" iterations
+
 	for link=links
-		%Do the stuff
+		rot_mtrx_cols = ((link-1)*3+1):((link-1)*3+3);
+		% Declaring the used parameters
+		R_i_1 = rotation_matrices(:, rot_mtrx_cols)
+		dot_theta_i = joint_speeds(link)
+		dot_dot_theta_i = joint_accelerations(link)
+		Z_i_1 = z_vector(:, link)
+
+		%Eq. 6,45
+		omega_i_1 = R_i_1*omega_i + dot_theta_i*Z_i_1
+
+		%Eq. 6,46
+		dot_omega_i_1 = R_i_1*dot_omega_i + cross(R_i_1*omega_i, dot_theta_i*Z_i_1) + dot_dot_theta_i*Z_i_1
+		
+		
+		%Eq. 6,47
+		
+
+		%Eq. 6,48
+		
+
+		%Eq. 6,49
+		
+
+		%Eq. 6,50
+	
+		%Updating the omega_i
+		omega_i = omega_i_1;
+		dot_omega_i = dot_omega_i_1;
+
 	end
 
 	% "Inner" iterations
@@ -54,6 +88,7 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 
 	for joint=joints
 		%Do the stuff
+		joint
 	end
 
 endfunction
