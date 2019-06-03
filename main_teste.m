@@ -26,7 +26,7 @@ DH_2R = [
 syms joint_z joint_p joint_r joint_rp;
 
 % Parametros dos elos:
-[joint_r, joint_rp] = linkParameters(DH_2R)
+[joint_r, joint_rp] = linkParameters(DH_2R);
 
 % Parametros das juntas:
 [joint_z, joint_p] = jointParameters(DH_2R);
@@ -53,7 +53,7 @@ mass_centers_2R = [
 	[a_1 a_2]
 	[ 0   0 ]
 	[ 0   0 ]
-] %MUDAR para a1*x1 e a2*x2
+]; %MUDAR para a1*x1 e a2*x2
 
 syms m_1 m_2;
 masses_2R = [m_1; m_2];
@@ -63,7 +63,7 @@ masses_2R = [m_1; m_2];
 I_tensor_2R = zeros(3,6);
 
 % Remover a primeira parte dos parametros:
-joint_r = joint_r(:, 4:9)
+joint_r = joint_r(:, 4:9);
 %joint_rp = joint_rp(:, 2:3);
 joint_z = joint_z(:, 2:3);
 
@@ -76,7 +76,7 @@ joint_rp = [
 	[0 a_1 a_2]
 	[0  0   0 ]
 	[0  0   0 ]
-]
+];
 
 [joint_F, joint_T] = robotDynamics(N_2R, joint_z, joint_rp, joint_r, speeds_2R, acc_2R, masses_2R, I_tensor_2R, mass_centers_2R, initial_acceleration_2R);
 
