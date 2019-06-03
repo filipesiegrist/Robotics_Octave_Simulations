@@ -27,7 +27,7 @@
 
 function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_vector, rotation_matrices, joint_speeds, joint_accelerations, link_masses, link_inertia_tensors, link_mass_centers, initial_accelerations)
 	links = 1:N;
-	joints = N:1;
+	joints =  N:-1:1;
 
 
 	% Initial conditions
@@ -82,8 +82,12 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 		F_i_1 = simplify(F_i_1)
 
 		%Eq. 6.50
-		N_i_plus_1 = I_i_1*dot_omega_i_1 + cross(omega_i_1, (I_i_1*omega_i_1));
-		N_i_plus_1 = simplify(N_i_plus_1)
+		N_i_1 = I_i_1*dot_omega_i_1 + cross(omega_i_1, (I_i_1*omega_i_1));
+		N_i_1 = simplify(N_i_1)
+
+		% Adding the forces and the torques to the vector 
+		F_i_plus_1 = [F_i_plus_1 F_i_1];
+		N_i_plus_1 = [N_i_plus_1 N_i_1];
 
 		%Updating the omega_i
 		omega_i = omega_i_1;
@@ -92,6 +96,8 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 	end
 
 	% "Inner" iterations
+	F_i_plus_1
+	N_i_plus_1
 
 	%Vectors with the static parameters
 	f_i = []; %Take the last value at the F_i_plus_1
