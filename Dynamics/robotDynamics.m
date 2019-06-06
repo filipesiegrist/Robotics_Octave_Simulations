@@ -39,8 +39,8 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 	dot_v_i = initial_accelerations;
 
 	% The tool doesn't have a force/Momentum
-	F_n = 0;
-	N_n = 0;
+	f_i_1 = [0; 0; 0];
+	n_i_1 = [0; 0; 0];
 
 	%Vectors with the dynamic parameters
 	F_i_plus_1 = [];
@@ -63,27 +63,27 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 
 		%Eq. 6.45
 		omega_i_1 = R_i_1*omega_i + dot_theta_i*Z_i_1;
-		omega_i_1 = simplify(omega_i_1)
+		omega_i_1 = simplify(omega_i_1);
 
 		%Eq. 6.46
 		dot_omega_i_1 = R_i_1*dot_omega_i + cross(R_i_1*omega_i, dot_theta_i*Z_i_1) + dot_dot_theta_i*Z_i_1;
-		dot_omega_i_1 = simplify(dot_omega_i_1)
+		dot_omega_i_1 = simplify(dot_omega_i_1);
 		
 		%Eq. 6.47
 		dot_v_i = R_i_1*(cross(dot_omega_i, P_i_1) + cross(omega_i, cross(omega_i, P_i_1)) + dot_v_i);
-		dot_v_i = simplify(dot_v_i)
+		dot_v_i = simplify(dot_v_i);
 
 		%Eq. 6.48
 		dot_vc_i = cross(dot_omega_i_1, Pc_i_1) + cross(omega_i_1, cross(omega_i_1, Pc_i_1)) + dot_v_i;
-		dot_vc_i = simplify(dot_vc_i)
+		dot_vc_i = simplify(dot_vc_i);
 
 		%Eq. 6.49
 		F_i_1 = m_i_1*dot_vc_i;
-		F_i_1 = simplify(F_i_1)
+		F_i_1 = simplify(F_i_1);
 
 		%Eq. 6.50
 		N_i_1 = I_i_1*dot_omega_i_1 + cross(omega_i_1, (I_i_1*omega_i_1));
-		N_i_1 = simplify(N_i_1)
+		N_i_1 = simplify(N_i_1);
 
 		% Adding the forces and the torques to the vector 
 		F_i_plus_1 = [F_i_plus_1 F_i_1];
@@ -100,12 +100,30 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 	N_i_plus_1
 
 	%Vectors with the static parameters
-	f_i = []; %Take the last value at the F_i_plus_1
-	n_i = []; %Take the last value at the n_i_plus_1
+	f_i_vector = []; %Take the last value at the F_i_plus_1
+	f_i_vector = []; %Take the last value at the n_i_plus_1
+
+	% Adding a 3x3 zeros matrix to the rotatio matrices vector
+	zeros_mtrx = zeros(3,3);
+	rotation_matrices = [rotation_matrices zeros_mtrx] % CONSERTAR OS INDICES!
 
 	for joint=joints
 		%Do the stuff
-		joint
+		rot_mtrx_cols = ((joint)*3+1):((joint)*3+3);
+		R_i_1 = rotation_matrices(:, rot_mtrx_cols) %tenho que pegar o anterior.
+		dot_theta_i = joint_speeds(joint)
+		Z_i = z_vector(:, joint)
+		P_i = relative_x_vector(:, joint) % são negativos???
+		Pc_i = link_mass_centers(:, joint)% são negativos???
+		F_i = F_i_plus_1(:, joint);
+		N_i = N_i_plus_1(:, joint)
+		% Achar o Pi e o Pci
+		f_i = R_i_1*f_i_1 + F_i;
+		f_i = simplify(f_i)
+		n_i_1 = N_i_1 + R_i_1*n_i_1 + cross(Pc_i, F_i) + cross(P_i, (R_i_1*f_i_1));
+		n_i_1 = simplify(n_i_1)
+
+
 	end
 
 endfunction
