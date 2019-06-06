@@ -110,18 +110,21 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 	for joint=joints
 		%Do the stuff
 		rot_mtrx_cols = ((joint)*3+1):((joint)*3+3);
-		R_i_1 = rotation_matrices(:, rot_mtrx_cols) %tenho que pegar o anterior.
-		dot_theta_i = joint_speeds(joint)
-		Z_i = z_vector(:, joint)
-		P_i = relative_x_vector(:, joint) % são negativos???
-		Pc_i = link_mass_centers(:, joint)% são negativos???
+		R_i_1 = rotation_matrices(:, rot_mtrx_cols); %tenho que pegar o anterior.
+		dot_theta_i = joint_speeds(joint);
+		Z_i = z_vector(:, joint);
+		P_i = relative_x_vector(:, joint); % são negativos???
+		Pc_i = link_mass_centers(:, joint);% são negativos???
 		F_i = F_i_plus_1(:, joint);
-		N_i = N_i_plus_1(:, joint)
+		N_i = N_i_plus_1(:, joint);
 		% Achar o Pi e o Pci
 		f_i = R_i_1*f_i_1 + F_i;
-		f_i = simplify(f_i)
+		f_i = simplify(f_i);
 		n_i_1 = N_i_1 + R_i_1*n_i_1 + cross(Pc_i, F_i) + cross(P_i, (R_i_1*f_i_1));
-		n_i_1 = simplify(n_i_1)
+		n_i_1 = simplify(n_i_1);
+
+		torque_i = transpose(n_i_1)*Z_i;
+		torque_i = simplify(torque_i)
 
 
 	end
