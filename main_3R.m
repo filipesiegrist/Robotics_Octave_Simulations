@@ -7,6 +7,7 @@ warning('off','all');
 addpath('./Inverse_Kinematics/');
 addpath('./Differential_Kinematics/');
 addpath('./Denavit_Hartenberg/');
+addpath('./Dynamics/');
 
 %Variaveis simbolicas
 syms a_1;

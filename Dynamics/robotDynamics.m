@@ -112,7 +112,7 @@ function [joint_forces, joint_torques] = robotDynamics(N, z_vector, relative_x_v
 
 	for joint=joints
 		%Do the stuff
-		rot_mtrx_cols = ((joint)*3+1):((joint)*3+3);
+		rot_mtrx_cols = ((joint)*3+1):((joint)*3+3)
 		R_i_1 = rotation_matrices(:, rot_mtrx_cols); %tenho que pegar o anterior.
 		dot_theta_i = joint_speeds(joint);
 		Z_i = z_vector(:, joint);

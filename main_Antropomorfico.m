@@ -7,6 +7,7 @@ warning('off','all');
 addpath('./Inverse_Kinematics/');
 addpath('./Differential_Kinematics/');
 addpath('./Denavit_Hartenberg/');
+addpath('./Dynamics/');
 
 %Variaveis simbolicas
 syms a_2;
@@ -31,10 +32,13 @@ DH_Antropomorfico = [
 	[0 0 0 0]
 ];
 
-syms joint_z joint_p joint_r;
+syms joint_z joint_p joint_r joint_rp;
+
+% Parametros dos elos:
+[joint_r, joint_rp] = linkParameters(DH_Antropomorfico);
 
 % Parametros das juntas:
-[joint_z, joint_p] = jointParameters(DH_Antropomorfico)
+[joint_z, joint_p] = jointParameters(DH_Antropomorfico);
 
 % jacobiano da cinemática
 Jc = jacobianMatrix(joint_z, joint_p);
@@ -64,5 +68,76 @@ Jc = subs(Jc,cos(theta_2+theta_3+theta_4),c234)
 
 % jacobiano da estática
 Je = transpose(Jc)
+
+% calculo da dinamica:
+
+%Numero de elos
+N_Antropomorfico = 6;
+
+% Velocidades e aceleracoes angulares
+syms speed_joint_1 speed_joint_2 speed_joint_3 speed_joint_4 speed_joint_5 speed_joint_6;
+syms acc_joint_1 acc_joint_2 acc_joint_3 acc_joint_4 acc_joint_5 acc_joint_6;
+speeds_Antropomorfico = [speed_joint_1; speed_joint_2; speed_joint_3; speed_joint_4; speed_joint_5; speed_joint_6];
+acc_Antropomorfico = [acc_joint_1; acc_joint_2; acc_joint_3; acc_joint_4; acc_joint_5; acc_joint_6];
+
+% Os centros de massa estão nas pontas.
+mass_centers_Antropomorfico = [
+	[ 0  a_2 a_3  0   0   0 ]
+	[ 0   0   0   0   0   0 ]
+	[ 0   0   0   0   0   0 ]
+]; 
+
+syms m_1 m_2 m_3 m_4 m_5 m_6;
+masses_Antropomorfico = [m_1; m_2; m_3; m_4; m_5; m_6];
+
+
+% Tensores de inercia (considerados como zero.)
+I_tensor_Antropomorfico = zeros(3,18);
+
+% Remover a primeira parte dos parametros:
+joint_r = joint_r(:, 4:21);
+%joint_rp = joint_rp(:, 2:3);
+joint_z = joint_z(:, 2:7);
+
+% Aceleracao no efetuador:
+syms g;
+initial_acceleration_Antropomorfico = [0; g ; 0];
+
+%Teste alternativo para os joint points. FUNCIONOU
+joint_rp = [
+	[0  0  a_2  a_3  0  0  0]
+	[0  0   0   0  0  0  0]
+	[0  0   0   0  0  0  0]
+];
+
+% Forças e torques nas juntas
+
+[joint_F, joint_T] = robotDynamics(N_Antropomorfico, joint_z, joint_rp, joint_r, speeds_Antropomorfico, acc_Antropomorfico, masses_Antropomorfico, I_tensor_Antropomorfico, mass_centers_Antropomorfico, initial_acceleration_Antropomorfico);
+
+joint_F = subs(joint_F, sin(theta_1),s1);
+joint_F = subs(joint_F, sin(theta_2),s2);
+joint_F = subs(joint_F, sin(theta_3),s3);
+joint_F = subs(joint_F, sin(theta_1+theta_2),s12);
+joint_F = subs(joint_F, sin(theta_2+theta_3),s23);
+joint_F = subs(joint_F, sin(theta_1+theta_2+theta_3),s123);
+joint_F = subs(joint_F, cos(theta_1),c1);
+joint_F = subs(joint_F, cos(theta_2),c2);
+joint_F = subs(joint_F, cos(theta_3),c3);
+joint_F = subs(joint_F, cos(theta_1+theta_2),c12);
+joint_F = subs(joint_F, cos(theta_2+theta_3),c23);
+joint_F = subs(joint_F, cos(theta_1+theta_2+theta_3),c123)
+
+joint_T = subs(joint_T, sin(theta_1),s1);
+joint_T = subs(joint_T, sin(theta_2),s2);
+joint_T = subs(joint_T, sin(theta_3),s3);
+joint_T = subs(joint_T, sin(theta_1+theta_2),s12);
+joint_T = subs(joint_T, sin(theta_2+theta_3),s23);
+joint_T = subs(joint_T, sin(theta_1+theta_2+theta_3),s123);
+joint_T = subs(joint_T, cos(theta_1),c1);
+joint_T = subs(joint_T, cos(theta_2),c2);
+joint_T = subs(joint_T, cos(theta_3),c3);
+joint_T = subs(joint_T, cos(theta_1+theta_2),c12);
+joint_T = subs(joint_T, cos(theta_2+theta_3),c23);
+joint_T = subs(joint_T, cos(theta_1+theta_2+theta_3),c123)
 
 clear;
