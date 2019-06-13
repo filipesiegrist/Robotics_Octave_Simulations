@@ -40,7 +40,7 @@ Juntas_Stanford = [ROTATIVA, ROTATIVA, PRISMATICA, ROTATIVA, ROTATIVA, ROTATIVA]
 syms joint_z joint_p joint_r;
 
 % Parametros das juntas:
-[joint_z, joint_p] = jointParameters(DH_Stanford, Juntas_Stanford)
+[joint_z, joint_p] = jointParameters(DH_Stanford, Juntas_Stanford);
 
 % jacobiano da cinemática
 Jc = jacobianMatrix(joint_z, joint_p);
@@ -63,7 +63,7 @@ joint_z = subs(joint_z,sin(theta_5),s5);
 joint_z = subs(joint_z,cos(theta_1),c1);
 joint_z = subs(joint_z,cos(theta_2),c2);
 joint_z = subs(joint_z,cos(theta_4),c4);
-joint_z = subs(joint_z,cos(theta_5),c5)
+joint_z = subs(joint_z,cos(theta_5),c5);
 
 % Valores P's mostrados no livro do Sicilano
 joint_p = subs(joint_p,sin(theta_1),s1);
@@ -73,7 +73,7 @@ joint_p = subs(joint_p,sin(theta_5),s5);
 joint_p = subs(joint_p,cos(theta_1),c1);
 joint_p = subs(joint_p,cos(theta_2),c2);
 joint_p = subs(joint_p,cos(theta_4),c4);
-joint_p = subs(joint_p,cos(theta_5),c5)
+joint_p = subs(joint_p,cos(theta_5),c5);
 
 Jc = subs(Jc,sin(theta_1),s1);
 Jc = subs(Jc,sin(theta_2),s2);

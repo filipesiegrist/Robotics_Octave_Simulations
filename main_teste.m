@@ -32,10 +32,10 @@ syms joint_z joint_p joint_r joint_rp;
 [joint_z, joint_p] = jointParameters(DH_2R);
 
 % jacobiano da cinemática
-%Jc = jacobianMatrix(joint_z, joint_p)
+Jc = jacobianMatrix(joint_z, joint_p)
 
 % jacobiano da estática
-%Je = transpose(Jc)
+Je = transpose(Jc)
 
 % calculo da dinamica:
 
@@ -78,6 +78,6 @@ joint_rp = [
 	[0  0   0 ]
 ];
 
-[joint_F, joint_T] = robotDynamics(N_2R, joint_z, joint_rp, joint_r, speeds_2R, acc_2R, masses_2R, I_tensor_2R, mass_centers_2R, initial_acceleration_2R);
+[joint_F, joint_T] = robotDynamics(N_2R, joint_z, joint_rp, joint_r, speeds_2R, acc_2R, masses_2R, I_tensor_2R, mass_centers_2R, initial_acceleration_2R)
 
 clear;
