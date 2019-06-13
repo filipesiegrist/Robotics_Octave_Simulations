@@ -11,6 +11,9 @@ addpath('./name_of folder/');
 Mover no origami:
 ctrl+k+l/r/u/d
 
+deletar janela vizinha:
+ctrl+k ctrl_shift+seta
+
 omega_i = rotation_matrices(certain_position)*omega_i + joint_speeds(joint_position)*z_vector(z_position).
 
 Tenho que ter omega_i_plus_1 !!! e dot_omega_i_plus_1
